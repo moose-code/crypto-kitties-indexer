@@ -1,0 +1,36 @@
+type KittyCore_Approval {
+  id: ID!
+  owner: String!
+  approved: String!
+  tokenId: BigInt!
+}
+
+type KittyCore_Birth {
+  id: ID!
+  owner: String!
+  kittyId: BigInt!
+  matronId: BigInt!
+  sireId: BigInt!
+  genes: BigInt!
+  timestamp: BigInt! @index
+}
+
+type KittyCore_ContractUpgrade {
+  id: ID!
+  newContract: String!
+}
+
+type KittyCore_Pregnant {
+  id: ID!
+  owner: String!
+  matronId: BigInt!
+  sireId: BigInt!
+  cooldownEndBlock: BigInt!
+}
+
+type KittyCore_Transfer {
+  id: ID!
+  from: String!
+  to: String!
+  tokenId: BigInt!
+}

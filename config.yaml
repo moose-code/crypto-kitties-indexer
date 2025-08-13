@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=./node_modules/envio/evm.schema.json
+name: envio-indexer
+networks:
+- id: 1
+  start_block: 0
+  contracts:
+  - name: KittyCore
+    address:
+    - 0x06012c8cf97BEaD5deAe237070F9587f8E7A266d
+    handler: src/EventHandlers.ts
+    events:
+    - event: Approval(address owner, address approved, uint256 tokenId)
+    - event: Birth(address owner, uint256 kittyId, uint256 matronId, uint256 sireId, uint256 genes)
+    - event: ContractUpgrade(address newContract)
+    - event: Pregnant(address owner, uint256 matronId, uint256 sireId, uint256 cooldownEndBlock)
+    - event: Transfer(address from, address to, uint256 tokenId)
+unordered_multichain_mode: true
+preload_handlers: true
