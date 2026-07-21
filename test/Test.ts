@@ -1,8 +1,5 @@
 import assert from "assert";
-import { 
-  TestHelpers,
-  KittyCore_Approval
-} from "generated";
+import { TestHelpers, KittyCore_Approval } from "envio";
 const { MockDb, KittyCore } = TestHelpers;
 
 describe("KittyCore contract Approval event tests", () => {
