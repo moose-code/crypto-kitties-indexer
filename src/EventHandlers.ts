@@ -1,16 +1,16 @@
 /*
  * Please refer to https://docs.envio.dev for a thorough guide on all Envio indexer features
  */
-import {
-  KittyCore,
+import { indexer } from "envio";
+import type {
   KittyCore_Approval,
   KittyCore_Birth,
   KittyCore_ContractUpgrade,
   KittyCore_Pregnant,
   KittyCore_Transfer,
-} from "generated";
+} from "envio";
 
-KittyCore.Approval.handler(async ({ event, context }) => {
+indexer.onEvent({ contract: "KittyCore", event: "Approval" }, async ({ event, context }) => {
   const entity: KittyCore_Approval = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     owner: event.params.owner,
@@ -21,7 +21,7 @@ KittyCore.Approval.handler(async ({ event, context }) => {
   context.KittyCore_Approval.set(entity);
 });
 
-KittyCore.Birth.handler(async ({ event, context }) => {
+indexer.onEvent({ contract: "KittyCore", event: "Birth" }, async ({ event, context }) => {
   const entity: KittyCore_Birth = {
     id: event.params.kittyId.toString(),
     owner: event.params.owner,
@@ -35,7 +35,7 @@ KittyCore.Birth.handler(async ({ event, context }) => {
   context.KittyCore_Birth.set(entity);
 });
 
-KittyCore.ContractUpgrade.handler(async ({ event, context }) => {
+indexer.onEvent({ contract: "KittyCore", event: "ContractUpgrade" }, async ({ event, context }) => {
   const entity: KittyCore_ContractUpgrade = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     newContract: event.params.newContract,
@@ -44,7 +44,7 @@ KittyCore.ContractUpgrade.handler(async ({ event, context }) => {
   context.KittyCore_ContractUpgrade.set(entity);
 });
 
-KittyCore.Pregnant.handler(async ({ event, context }) => {
+indexer.onEvent({ contract: "KittyCore", event: "Pregnant" }, async ({ event, context }) => {
   const entity: KittyCore_Pregnant = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     owner: event.params.owner,
@@ -56,7 +56,7 @@ KittyCore.Pregnant.handler(async ({ event, context }) => {
   context.KittyCore_Pregnant.set(entity);
 });
 
-KittyCore.Transfer.handler(async ({ event, context }) => {
+indexer.onEvent({ contract: "KittyCore", event: "Transfer" }, async ({ event, context }) => {
   const entity: KittyCore_Transfer = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     from: event.params.from,
