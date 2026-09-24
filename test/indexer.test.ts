@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { createTestIndexer, TestHelpers, type KittyCore_Approval } from "envio";
+import { createTestIndexer, TestHelpers, type KittyCore_Approval, type KittyCore_Birth } from "envio";
 
 const { Addresses } = TestHelpers;
 
@@ -16,5 +16,19 @@ describe("KittyCore Approval", () => {
     const id = `1_${blockNumber}_0`;
     const expected: KittyCore_Approval = { id, owner: params.owner, approved: params.approved, tokenId: params.tokenId };
     expect(await indexer.KittyCore_Approval.getOrThrow(id)).toEqual(expected);
+  });
+});
+
+describe("KittyCore Birth", () => {
+  it("stores a KittyCore_Birth entity keyed by kittyId with the block timestamp", async () => {
+    const indexer = createTestIndexer();
+    const params = { owner: Addresses.mockAddresses[0], kittyId: 7n, matronId: 1n, sireId: 2n, genes: 123456789n };
+
+    await indexer.process({
+      chains: { 1: { simulate: [{ contract: "KittyCore", event: "Birth", params, block: { number: 4605200, timestamp: 1511417999 }, logIndex: 3 }] } },
+    });
+
+    const expected: KittyCore_Birth = { id: "7", ...params, timestamp: 1511417999n };
+    expect(await indexer.KittyCore_Birth.getOrThrow("7")).toEqual(expected);
   });
 });
